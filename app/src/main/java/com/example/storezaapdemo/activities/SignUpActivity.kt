@@ -118,17 +118,9 @@ class SignUpActivity :  Fragment(), View.OnClickListener{
                     val errorResponse = jsonObject.getString("error")
                     if (errorResponse.equals("200")) {
                         switchOnLogin()
-                        Toast.makeText(
-                            activity,
-                            loginResponse,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(activity, loginResponse, Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(
-                            activity,
-                            loginResponse,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(activity, loginResponse, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

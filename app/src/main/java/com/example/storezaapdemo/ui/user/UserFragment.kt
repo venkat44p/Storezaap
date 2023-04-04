@@ -34,6 +34,7 @@ class UserFragment : Fragment() {
     private lateinit var email: EditText
     private lateinit var password: EditText
     private lateinit var login: Button
+    private lateinit var forgetpassword: TextView
     private lateinit var registerlink: TextView
     private lateinit var sharedPrefManager: SharedPrefManager
 
@@ -52,6 +53,7 @@ class UserFragment : Fragment() {
 
         email = view.findViewById(R.id.etemail)
         password = view.findViewById(R.id.etpassword)
+        forgetpassword = view.findViewById(R.id.forgetPassword)
         login = view.findViewById(R.id.btnlogin)
         registerlink = view.findViewById(R.id.registerlink)
 
@@ -62,6 +64,11 @@ class UserFragment : Fragment() {
            userLogin()
 
         }
+
+        /*forgetpassword.setOnClickListener {
+            Intent intent = Intent(this, ForgetActivity::class.java)
+            startActivity(intent)
+        }*/
 
         sharedPrefManager = SharedPrefManager(requireActivity().application)
 

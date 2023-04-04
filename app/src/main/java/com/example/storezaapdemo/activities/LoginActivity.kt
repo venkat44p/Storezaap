@@ -56,6 +56,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(intent)
         }
 
+
         sharedPrefManager = SharedPrefManager(applicationContext)
     }
 

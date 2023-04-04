@@ -3,14 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.store.StoreFragment">
+    tools:context=".ui.store.StoreFragment"
+    android:orientation="horizontal">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Stores"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textColor="@color/black"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_layout"/>
 
 </LinearLayout>
