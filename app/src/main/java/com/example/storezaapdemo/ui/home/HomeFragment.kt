@@ -161,6 +161,8 @@ class HomeFragment : Fragment() {
         }
 
 
+
+
         imageList.add(SlideModel("https://storezaap.com/img/slider/si2.jpg"))
         imageList.add(SlideModel("https://storezaap.com/img/slider/si4.jpg",))
         imageList.add(SlideModel("https://storezaap.com/img/slider/si3.jpg"))

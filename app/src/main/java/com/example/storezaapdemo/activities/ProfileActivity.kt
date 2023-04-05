@@ -2,30 +2,18 @@ package com.example.storezaapdemo.activities
 
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.storezaapdemo.R
 import com.example.storezaapdemo.SharedPrefManager
-import com.example.storezaapdemo.databinding.ActivityMainBinding
-import com.example.storezaapdemo.ui.home.HomeFragment
-import com.example.storezaapdemo.ui.user.UserFragment
 import com.example.storezaapdemo.ui.user.UserViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.navigation.NavigationView
 
 class ProfileActivity :  Fragment() {
 
