@@ -106,10 +106,7 @@ class SignUpActivity :  Fragment(), View.OnClickListener{
             .register(userName, userEmail, userPassword)
 
         call.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val responseBody: ResponseBody = Objects.requireNonNull(response.body())!!
                     val body = responseBody.string()

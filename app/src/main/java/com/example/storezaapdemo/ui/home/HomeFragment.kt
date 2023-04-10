@@ -14,8 +14,13 @@ import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.storezaapdemo.R
+import com.example.storezaapdemo.RetrofitClient
 import com.example.storezaapdemo.databinding.FragmentHomeBinding
+import com.example.storezaapdemo.model.SliderImage
 import com.example.storezaapdemo.ui.store.StoreFragment
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
 
 class HomeFragment : Fragment() {
 
@@ -160,7 +165,8 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-
+        val call: Call<SliderImage> =
+            RetrofitClient.getInstance().getApi().getSliderImages()
 
 
         imageList.add(SlideModel("https://storezaap.com/img/slider/si2.jpg"))

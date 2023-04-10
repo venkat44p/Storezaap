@@ -6,9 +6,13 @@ import com.google.gson.annotations.SerializedName
 class SliderImage {
     @SerializedName("users")
     @Expose
-    var users: List<String>? = null
+    val users: List<String>? = null
 
     @SerializedName("error")
     @Expose
-    var error: String? = null
+    val error: String? = null
+
+    @SerializedName("brand")
+    @Expose
+    val brand: List<String>? = null
 }
