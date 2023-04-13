@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.storezaapdemo.Api
 import com.example.storezaapdemo.R
@@ -175,11 +176,11 @@ class HomeFragment : Fragment() {
 
 
 
-        //imageList.add(SlideModel("https://storezaap.com/img/slider/si2.jpg"))
-        //imageList.add(SlideModel("https://storezaap.com/img/slider/si4.jpg",))
-        //imageList.add(SlideModel("https://storezaap.com/img/slider/si3.jpg"))
+        imageList.add(SlideModel("https://storezaap.com/img/slider/si2.jpg"))
+        imageList.add(SlideModel("https://storezaap.com/img/slider/si4.jpg",))
+        imageList.add(SlideModel("https://storezaap.com/img/slider/si3.jpg"))
 
-        //imageSlider.setImageList(imageList, ScaleTypes.FIT)
+        imageSlider.setImageList(imageList, ScaleTypes.FIT)
         return view
     }
 
