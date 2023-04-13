@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.denzcoskun.imageslider.ImageSlider
-import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.example.storezaapdemo.Api
 import com.example.storezaapdemo.R
-import com.example.storezaapdemo.RetrofitClient
+import com.example.storezaapdemo.SliderImageAdapter
 import com.example.storezaapdemo.ui.store.StoreFragment
-import retrofit2.Call
 
 class HomeFragment : Fragment() {
 
@@ -159,14 +159,27 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+      /* try {
+            val response = Api.getSliderImage()
+            // Access the response properties here
+            val sliderList = response.slider
+            val error = response.error
+            val brandList = response.brand
+            // Update the UI with the slider images
+            val viewPager = findViewById<ViewPager2>(R.id.viewPager)
+            viewPager.adapter = SliderImageAdapter(this@HomeFragment, sliderList)
+        } catch (e: Exception) {
+            // Handle the exception here
+        }*/
 
 
 
-        imageList.add(SlideModel("https://storezaap.com/img/slider/si2.jpg"))
-        imageList.add(SlideModel("https://storezaap.com/img/slider/si4.jpg",))
-        imageList.add(SlideModel("https://storezaap.com/img/slider/si3.jpg"))
 
-        imageSlider.setImageList(imageList, ScaleTypes.FIT)
+        //imageList.add(SlideModel("https://storezaap.com/img/slider/si2.jpg"))
+        //imageList.add(SlideModel("https://storezaap.com/img/slider/si4.jpg",))
+        //imageList.add(SlideModel("https://storezaap.com/img/slider/si3.jpg"))
+
+        //imageSlider.setImageList(imageList, ScaleTypes.FIT)
         return view
     }
 
