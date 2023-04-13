@@ -1,14 +1,14 @@
 package com.example.storezaapdemo
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.storezaapdemo.ui.home.HomeFragment
 import com.squareup.picasso.Picasso
 
-class SliderImageAdapter(private val context: HomeFragment, private val imageList: List<String>) :
+class SliderImageAdapter(private val context: Context, private val imageList: List<String>) :
     RecyclerView.Adapter<SliderImageAdapter.SliderImageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SliderImageViewHolder {

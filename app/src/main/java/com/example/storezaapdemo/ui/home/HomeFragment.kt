@@ -12,10 +12,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.example.storezaapdemo.Api
 import com.example.storezaapdemo.R
+import com.example.storezaapdemo.RetrofitClient
 import com.example.storezaapdemo.SliderImageAdapter
 import com.example.storezaapdemo.ui.store.StoreFragment
+import retrofit2.Call
 
 class HomeFragment : Fragment() {
 
@@ -160,8 +161,8 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-      /* try {
-            val response = Api.getSliderImage()
+       /* try {
+            val response = apiService.getSliderImage()
             // Access the response properties here
             val sliderList = response.slider
             val error = response.error
