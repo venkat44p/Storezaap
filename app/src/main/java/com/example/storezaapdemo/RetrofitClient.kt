@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient private constructor() {
 
-    private val BASE_URL = "https://storezaap.com/mpp/Android_Test_API/"
+    private val BASE_URL = "http://192.168.1.236/store/"
     private val builder = OkHttpClient.Builder()
     private val interceptor = HttpLoggingInterceptor()
 

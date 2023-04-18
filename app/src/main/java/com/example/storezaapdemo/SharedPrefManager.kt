@@ -39,4 +39,11 @@ class SharedPrefManager(private val context: Context) {
         editor!!.clear()
         editor!!.apply()
     }
+
+    fun clear() {
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        editor = sharedPreferences!!.edit()
+        editor!!.clear()
+        editor!!.apply()
+    }
 }

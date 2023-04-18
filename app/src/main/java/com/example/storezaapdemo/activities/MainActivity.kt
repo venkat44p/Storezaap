@@ -1,12 +1,12 @@
 package com.example.storezaapdemo.activities
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -167,6 +167,11 @@ class MainActivity : AppCompatActivity() {
         // Redirect user to Home screen
         val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
+
+        /*sharedPrefManager.clear()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()*/
     }
 
 
@@ -180,4 +185,23 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+   /* override fun onDestroy() {
+        super.onDestroy()
+        if (sharedPrefManager.isLoggedIn()) {
+            clearUserSession()
+        }
+    }*/
+
+    /*override fun onDestroy() {
+        super.onDestroy()
+
+        // Get the shared preferences manager
+        val sharedPref = getSharedPreferences("my_pref", Context.MODE_PRIVATE)
+
+        // Clear the saved data
+        val editor = sharedPref.edit()
+        editor.clear()
+        editor.apply()
+    }*/
 }
