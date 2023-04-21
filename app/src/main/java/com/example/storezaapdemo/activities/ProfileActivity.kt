@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.storezaapdemo.R
 import com.example.storezaapdemo.SharedPrefManager
 import com.example.storezaapdemo.ui.user.UserViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
+import java.util.*
 
 class ProfileActivity :  Fragment() {
 
@@ -95,9 +97,26 @@ class ProfileActivity :  Fragment() {
         startActivity(intent)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         imageView.setImageURI(data?.data)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (sharedPrefManager.isLoggedIn()) {
+            Toast.makeText(requireContext(),"saved", Toast.LENGTH_SHORT).show()
+            sharedPrefManager.let {
+                it.setLastTimeAppUsed(requireContext(), Date())
+                it.setIsLastTimeAppUseSaved(requireContext(),true)
+            }
+
+        } else {
+            sharedPrefManager.setIsLastTimeAppUseSaved(requireContext(),false)
+            Toast.makeText(requireContext(),"else ${sharedPrefManager.isLoggedIn()}", Toast.LENGTH_SHORT).show()
+
+        }
     }
 }
 

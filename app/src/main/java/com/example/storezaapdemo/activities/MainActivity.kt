@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -39,6 +40,9 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Toast.makeText(this,"created",Toast.LENGTH_SHORT).show()
+
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
@@ -150,8 +154,8 @@ class MainActivity : AppCompatActivity() {
         calendar.add(Calendar.MINUTE, 3)
 
 
-        if (sharedPrefManager.getIsLastTimeAppUseSaved() && sharedPrefManager.isLoggedIn()) {
-            if (!sharedPrefManager.getLastTimeAppUsed().before(calendar.time)) {
+        if (sharedPrefManager.getIsLastTimeAppUseSaved(this) && sharedPrefManager.isLoggedIn()) {
+            if (!sharedPrefManager.getLastTimeAppUsed(this).before(calendar.time)) {
                 sharedPrefManager.logout()
             }
         }
@@ -203,15 +207,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        if (sharedPrefManager.isLoggedIn()) {
-            sharedPrefManager.let {
-                it.setLastTimeAppUsed(Date())
-                it.setIsLastTimeAppUseSaved(true)
-            }
-        } else {
-            sharedPrefManager.setIsLastTimeAppUseSaved(false)
-        }
         super.onDestroy()
+        if (sharedPrefManager.isLoggedIn()) {
+            Toast.makeText(this,"saved ${sharedPrefManager.isLoggedIn()}",Toast.LENGTH_SHORT).show()
+            sharedPrefManager.let {
+                it.setLastTimeAppUsed(this,Date())
+                it.setIsLastTimeAppUseSaved(this,true)
+            }
+
+        } else {
+            sharedPrefManager.setIsLastTimeAppUseSaved(this,false)
+            Toast.makeText(this,"else ${sharedPrefManager.isLoggedIn()}",Toast.LENGTH_SHORT).show()
+
+        }
+
+
     }
 
     /*override fun onDestroy() {

@@ -102,7 +102,7 @@ class UserFragment : Fragment() {
         }
 
 
-        val call: Response<ResponseBody> =
+        val call: Call<ResponseBody> =
             RetrofitClient.getInstance().getApi().login(userEmail, userPassword)
 
 

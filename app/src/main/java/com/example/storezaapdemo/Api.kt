@@ -10,7 +10,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface Api : Call<ResponseBody> {
+interface Api  {
 
     @FormUrlEncoded
     @POST("register.php")
