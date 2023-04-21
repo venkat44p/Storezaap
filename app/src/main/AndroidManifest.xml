@@ -52,10 +52,7 @@
                 android:value="" />
         </activity>
 
-        <service android:name=".utils.BackgroundService"
-            android:enabled="true"
-            android:exported="true"
-            android:label="BackgroundService"/>
+
 
     </application>
 

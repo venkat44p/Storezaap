@@ -8,7 +8,8 @@ import java.util.Date
 
 class SharedPrefManager(private val context: Context) {
     private val SHARED_PREF_NAME = "thecodingshef"
-    private  val USER_LOGGED_IN_TIME = "user_time"
+    private  val LAST_TIME_APP_USED = "last_time"
+    private  val IS_LAST_TIME_ = "is_last_time"
     private var sharedPreferences: SharedPreferences? = null
     private var editor: SharedPreferences.Editor? = null
 
@@ -39,6 +40,7 @@ class SharedPrefManager(private val context: Context) {
     fun logout() {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         editor = sharedPreferences!!.edit()
+        setIsLastTimeAppUseSaved(false)
         editor!!.clear()
         editor!!.apply()
     }
@@ -50,20 +52,32 @@ class SharedPrefManager(private val context: Context) {
         editor!!.apply()
     }
 
-    fun getUserLoggedInTime(): Date {
+    fun getLastTimeAppUsed(): Date {
 
        val mills= context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)?.
-        getLong(USER_LOGGED_IN_TIME,System.currentTimeMillis())?:System.currentTimeMillis()
+        getLong(LAST_TIME_APP_USED,System.currentTimeMillis())?:System.currentTimeMillis()
         return Date(mills)
     }
 
-    fun setUserLoggedInTime(date: Date){
+    fun setLastTimeAppUsed(date: Date){
          context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)?.edit {
-             putLong(USER_LOGGED_IN_TIME,date.time)
+             putLong(LAST_TIME_APP_USED,date.time)
              apply()
          }
 
     }
 
+    fun getIsLastTimeAppUseSaved():Boolean
+    {
+        return context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).getBoolean(IS_LAST_TIME_,false)
+    }
+    fun setIsLastTimeAppUseSaved(isSaved:Boolean)
+    {
+        context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE).edit {
+            putBoolean(IS_LAST_TIME_,isSaved)
+            apply()
+        }
+
+    }
 
 }

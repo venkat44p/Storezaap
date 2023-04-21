@@ -1,9 +1,7 @@
 package com.example.storezaapdemo.activities
 
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.Menu
 import android.widget.LinearLayout
@@ -25,6 +23,7 @@ import com.example.storezaapdemo.ui.store.StoreFragment
 import com.example.storezaapdemo.ui.user.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        NavigationUI.setupWithNavController(binding.appBarMain.bottomNavigationView,navController)
+        NavigationUI.setupWithNavController(binding.appBarMain.bottomNavigationView, navController)
 
         etname = findViewById(R.id.etname)
         etemail = findViewById(R.id.etemail)
@@ -84,41 +83,41 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        findViewById<LinearLayout>(R.id.nav_home_2).setOnClickListener{
-            getSupportActionBar()?.setTitle("Home")
-            bottomNavigationView.getMenu().getItem(0).setChecked(true)
+        findViewById<LinearLayout>(R.id.nav_home_2).setOnClickListener {
+            supportActionBar?.title = "Home"
+            bottomNavigationView.menu.getItem(0).isChecked = true
             val fragmentB = HomeFragment()
             loadFragment(fragmentB)
             drawerLayout.closeDrawers()
         }
-        findViewById<LinearLayout>(R.id.nav_store).setOnClickListener{
-            getSupportActionBar()?.setTitle("Store")
+        findViewById<LinearLayout>(R.id.nav_store).setOnClickListener {
+            supportActionBar?.title = "Store"
             val fragmentB = StoreFragment()
             loadFragment(fragmentB)
             drawerLayout.closeDrawers()
         }
-        findViewById<LinearLayout>(R.id.nav_service).setOnClickListener{
-            getSupportActionBar()?.setTitle("Service")
+        findViewById<LinearLayout>(R.id.nav_service).setOnClickListener {
+            supportActionBar?.title = "Service"
             val fragmentB = ServicesFragment()
             loadFragment(fragmentB)
             drawerLayout.closeDrawers()
         }
-        findViewById<LinearLayout>(R.id.nav_news).setOnClickListener{
-            getSupportActionBar()?.setTitle("News")
-            bottomNavigationView.getMenu().getItem(1).setChecked(true)
+        findViewById<LinearLayout>(R.id.nav_news).setOnClickListener {
+            supportActionBar?.title = "News"
+            bottomNavigationView.menu.getItem(1).isChecked = true
             val fragmentB = NewsFragment()
             loadFragment(fragmentB)
             drawerLayout.closeDrawers()
         }
-        findViewById<LinearLayout>(R.id.nav_user).setOnClickListener{
-            getSupportActionBar()?.setTitle("User")
-            bottomNavigationView.getMenu().getItem(2).setChecked(true)
+        findViewById<LinearLayout>(R.id.nav_user).setOnClickListener {
+            supportActionBar?.title = "User"
+            bottomNavigationView.menu.getItem(2).isChecked = true
             val fragmentB = ProfileFragment()
             loadFragment(fragmentB)
             drawerLayout.closeDrawers()
         }
 
-        findViewById<LinearLayout>(R.id.nav_logout).setOnClickListener{
+        findViewById<LinearLayout>(R.id.nav_logout).setOnClickListener {
             if (sharedPrefManager.isLoggedIn()) {
 
 
@@ -135,23 +134,28 @@ class MainActivity : AppCompatActivity() {
                     .show()
 
 
-            }else{
-                getSupportActionBar()?.setTitle("User")
-                bottomNavigationView.getMenu().getItem(2).setChecked(true)
+            } else {
+                supportActionBar?.title = "User"
+                bottomNavigationView.menu.getItem(2).isChecked = true
                 val fragmentB = UserFragment()
                 loadFragment(fragmentB)
                 drawerLayout.closeDrawers()
             }
         }
 
-        var textView7=findViewById<TextView>(R.id.textView7);
+        var textView7 = findViewById<TextView>(R.id.textView7)
 
-        val calendar=java.util.Calendar.getInstance()
-        calendar.add(java.util.Calendar.MINUTE,10)
 
-        if(!sharedPrefManager.getUserLoggedInTime().before(calendar.time)){
-            sharedPrefManager.logout()
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.MINUTE, 3)
+
+
+        if (sharedPrefManager.getIsLastTimeAppUseSaved() && sharedPrefManager.isLoggedIn()) {
+            if (!sharedPrefManager.getLastTimeAppUsed().before(calendar.time)) {
+                sharedPrefManager.logout()
+            }
         }
+
 
 
         if (sharedPrefManager.isLoggedIn()) {
@@ -159,18 +163,20 @@ class MainActivity : AppCompatActivity() {
             etname.text = userName
             etemail.text = sharedPrefManager.getUser().email
 
-            textView7.setText("Logout")
-        }else{
-            textView7.setText("Login")
+            textView7.text = "Logout"
+        } else {
+            textView7.text = "Login"
         }
 
     }
-    private fun loadFragment(fragment: Fragment){
+
+    private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.nav_host_fragment_content_main, fragment)
         transaction.disallowAddToBackStack()
         transaction.commit()
     }
+
     private fun clearUserSession() {
 
         sharedPrefManager.logout()
@@ -196,12 +202,17 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-   /* override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroy() {
         if (sharedPrefManager.isLoggedIn()) {
-            clearUserSession()
+            sharedPrefManager.let {
+                it.setLastTimeAppUsed(Date())
+                it.setIsLastTimeAppUseSaved(true)
+            }
+        } else {
+            sharedPrefManager.setIsLastTimeAppUseSaved(false)
         }
-    }*/
+        super.onDestroy()
+    }
 
     /*override fun onDestroy() {
         super.onDestroy()

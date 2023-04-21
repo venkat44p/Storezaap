@@ -102,8 +102,9 @@ class UserFragment : Fragment() {
         }
 
 
-        val call: Call<ResponseBody> =
+        val call: Response<ResponseBody> =
             RetrofitClient.getInstance().getApi().login(userEmail, userPassword)
+
 
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -117,14 +118,13 @@ class UserFragment : Fragment() {
                     if (errorResponse.equals("200")) {
 
 
-
                         val jsonuser = JSONObject(jsonObject.getString("user"))
                         Log.d(
                             "TAG",
                             jsonuser.getString("username") + "onResponse: ......................." + body
                         )
 
-                        sharedPrefManager.setUserLoggedInTime(Date())
+
 
                         var user = User(
                             jsonuser.getString("id"),
