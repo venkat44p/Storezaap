@@ -3,6 +3,7 @@ package com.example.storezaapdemo.activities
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.Menu
 import android.widget.LinearLayout
@@ -144,6 +145,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         var textView7=findViewById<TextView>(R.id.textView7);
+
+        val calendar=java.util.Calendar.getInstance()
+        calendar.add(java.util.Calendar.MINUTE,10)
+
+        if(!sharedPrefManager.getUserLoggedInTime().before(calendar.time)){
+            sharedPrefManager.logout()
+        }
+
+
         if (sharedPrefManager.isLoggedIn()) {
             val userName = "Hey! " + sharedPrefManager.getUser().username
             etname.text = userName

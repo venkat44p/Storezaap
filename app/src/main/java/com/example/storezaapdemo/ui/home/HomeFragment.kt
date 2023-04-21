@@ -3,15 +3,25 @@ package com.example.storezaapdemo.ui.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.example.storezaapdemo.Api
 import com.example.storezaapdemo.R
+import com.example.storezaapdemo.RetrofitClient
 import com.example.storezaapdemo.ui.store.StoreFragment
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
@@ -156,27 +166,13 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-       /* try {
-            val response = Api.getSliderImage()
-            // Access the response properties here
-            val sliderList = response.slider
-            val error = response.error
-            val brandList = response.brand
-            // Update the UI with the slider images
-            val viewPager = findViewById<ViewPager2>(R.id.viewPager)
-            viewPager.adapter = SliderImageAdapter(this@HomeFragment, sliderList)
-        } catch (e: Exception) {
-            // Handle the exception here
-        }*/
 
 
-
-
-        /*imageList.add(SlideModel("https://storezaap.com/img/slider/si2.jpg"))
+        imageList.add(SlideModel("https://storezaap.com/img/slider/si2.jpg"))
         imageList.add(SlideModel("https://storezaap.com/img/slider/si4.jpg",))
         imageList.add(SlideModel("https://storezaap.com/img/slider/si3.jpg"))
 
-        imageSlider.setImageList(imageList, ScaleTypes.FIT)*/
+        imageSlider.setImageList(imageList, ScaleTypes.FIT)
         return view
     }
 

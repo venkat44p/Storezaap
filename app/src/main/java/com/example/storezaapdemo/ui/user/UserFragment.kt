@@ -26,6 +26,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 import java.util.Objects.requireNonNull
 
 
@@ -122,6 +123,8 @@ class UserFragment : Fragment() {
                             "TAG",
                             jsonuser.getString("username") + "onResponse: ......................." + body
                         )
+
+                        sharedPrefManager.setUserLoggedInTime(Date())
 
                         var user = User(
                             jsonuser.getString("id"),
