@@ -13,20 +13,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.storezaapdemo.R
 import com.example.storezaapdemo.RetrofitClient
 import com.example.storezaapdemo.SharedPrefManager
 import com.example.storezaapdemo.activities.ProfileActivity
 import com.example.storezaapdemo.activities.SignUpActivity
 import com.example.storezaapdemo.model.User
-import com.example.storezaapdemo.ui.services.ServicesFragment
 import okhttp3.ResponseBody
-import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 import java.util.Objects.requireNonNull
 
 
@@ -40,6 +38,8 @@ class UserFragment : Fragment() {
     private lateinit var sharedPrefManager: SharedPrefManager
 
     companion object {
+        const val ACTION_LOGIN_SUCCESSFUL="com.example.storezaapdemo.ACTION_LOGIN_SUCCESSFUL"
+        const val LOGIN_RESULT_EXTRA="login_result"
         fun newInstance() = UserFragment()
     }
 
@@ -126,6 +126,7 @@ class UserFragment : Fragment() {
 
 
 
+
                         var user = User(
                             jsonuser.getString("id"),
                             jsonuser.getString("username"),
@@ -145,6 +146,16 @@ class UserFragment : Fragment() {
 //                        startActivity(intent)
                         Toast.makeText(activity, loginResponse.toString(), Toast.LENGTH_SHORT)
                             .show()
+
+
+                        // sending brodcast with result that login is succesful
+
+                        val logInIntent=Intent(
+                            ACTION_LOGIN_SUCCESSFUL)
+                        logInIntent.putExtra(LOGIN_RESULT_EXTRA,true)
+
+                        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(logInIntent)
+
                     }else{
                         Toast.makeText(activity, loginResponse.toString(), Toast.LENGTH_SHORT)
                             .show()
@@ -196,5 +207,7 @@ class UserFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         // TODO: Use the ViewModel
     }
+
+
 
 }

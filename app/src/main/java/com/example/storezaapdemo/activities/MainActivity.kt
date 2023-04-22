@@ -1,7 +1,10 @@
 package com.example.storezaapdemo.activities
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.Menu
 import android.widget.LinearLayout
@@ -11,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.storezaapdemo.R
@@ -34,6 +38,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPrefManager: SharedPrefManager
     private lateinit var etname: TextView
     private lateinit var etemail: TextView
+
+
+    // broadcast receiver for login
+    private val loginReceiver= object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            intent?.let {
+                // below is execute when login is succesful
+                if(it.getBooleanExtra(UserFragment.LOGIN_RESULT_EXTRA,false)){
+                    val userName = "Hey! " + sharedPrefManager.getUser().username
+                    etname.text = userName
+                    etemail.text = sharedPrefManager.getUser().email
+                    binding.textView7.text = "Logout"
+                }
+            }
+        }
+
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,6 +152,10 @@ class MainActivity : AppCompatActivity() {
                     .setPositiveButton(android.R.string.yes,
                         DialogInterface.OnClickListener { dialog, which ->
                             clearUserSession()
+                            // changing texts when user clicked logout
+                            etemail.text=""
+                            binding.textView7.text = "Login"
+
                         }) // A null listener allows the button to dismiss the dialog and take no further action.
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
@@ -183,6 +209,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+
+        // if user logged in saving the app exit time
         if (sharedPrefManager.isLoggedIn()) {
             sharedPrefManager.let {
                 it.setLastTimeAppUsed(this@MainActivity, Date())
@@ -194,17 +222,26 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        // unregister broadcast receiver , we not want to receive when app is closed
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(loginReceiver)
+
     }
 
     override fun onStart() {
         super.onStart()
 
-        val MINUTES = 2
+
+        // register broadcast receiver for receving broadcast
+        val filter=IntentFilter(UserFragment.ACTION_LOGIN_SUCCESSFUL)
+        LocalBroadcastManager.getInstance(this).registerReceiver(loginReceiver,filter)
+
+        val MINUTES = 10
 
         val timeDiffInMillis = MINUTES * 60 * 1000
         val tenMinutesAgo = System.currentTimeMillis() - timeDiffInMillis
 
 
+        // checking if saved time is older than 10 minutes or not
         if (sharedPrefManager.getIsLastTimeAppUseSaved(this) && sharedPrefManager.isLoggedIn()) {
             if (sharedPrefManager.getLastTimeAppUsed(this).time < tenMinutesAgo) {
                 sharedPrefManager.logout()
