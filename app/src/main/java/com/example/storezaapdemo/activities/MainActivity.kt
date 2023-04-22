@@ -41,8 +41,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Toast.makeText(this,"created",Toast.LENGTH_SHORT).show()
-
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
@@ -147,30 +145,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        var textView7 = findViewById<TextView>(R.id.textView7)
-
-
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.MINUTE, 3)
-
-
-        if (sharedPrefManager.getIsLastTimeAppUseSaved(this) && sharedPrefManager.isLoggedIn()) {
-            if (!sharedPrefManager.getLastTimeAppUsed(this).before(calendar.time)) {
-                sharedPrefManager.logout()
-            }
-        }
-
-
-
-        if (sharedPrefManager.isLoggedIn()) {
-            val userName = "Hey! " + sharedPrefManager.getUser().username
-            etname.text = userName
-            etemail.text = sharedPrefManager.getUser().email
-
-            textView7.text = "Logout"
-        } else {
-            textView7.text = "Login"
-        }
 
     }
 
@@ -206,21 +180,45 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+
+    override fun onPause() {
+        super.onPause()
         if (sharedPrefManager.isLoggedIn()) {
-            Toast.makeText(this,"saved ${sharedPrefManager.isLoggedIn()}",Toast.LENGTH_SHORT).show()
             sharedPrefManager.let {
-                it.setLastTimeAppUsed(this,Date())
-                it.setIsLastTimeAppUseSaved(this,true)
+                it.setLastTimeAppUsed(this@MainActivity, Date())
+                it.setIsLastTimeAppUseSaved(this@MainActivity, true)
             }
 
         } else {
-            sharedPrefManager.setIsLastTimeAppUseSaved(this,false)
-            Toast.makeText(this,"else ${sharedPrefManager.isLoggedIn()}",Toast.LENGTH_SHORT).show()
+            sharedPrefManager.setIsLastTimeAppUseSaved(this, false)
 
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val MINUTES = 2
+
+        val timeDiffInMillis = MINUTES * 60 * 1000
+        val tenMinutesAgo = System.currentTimeMillis() - timeDiffInMillis
+
+
+        if (sharedPrefManager.getIsLastTimeAppUseSaved(this) && sharedPrefManager.isLoggedIn()) {
+            if (sharedPrefManager.getLastTimeAppUsed(this).time < tenMinutesAgo) {
+                sharedPrefManager.logout()
+                binding.textView7.text = "Login"
+            } else {
+                val userName = "Hey! " + sharedPrefManager.getUser().username
+                etname.text = userName
+                etemail.text = sharedPrefManager.getUser().email
+                binding.textView7.text = "Logout"
+            }
+
+        } else {
+            binding.textView7.text = "Login"
+        }
 
     }
 

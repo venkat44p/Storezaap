@@ -74,7 +74,7 @@ class SharedPrefManager(private val context: Context) {
     fun setIsLastTimeAppUseSaved(context: Context,isSaved:Boolean)
     {
         context.getSharedPreferences(TIME_SHARED_PREF, Context.MODE_PRIVATE).edit {
-            putBoolean(TIME_SHARED_PREF,isSaved)
+            putBoolean(IS_LAST_TIME,isSaved)
             apply()
         }
 

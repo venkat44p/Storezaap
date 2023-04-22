@@ -103,21 +103,7 @@ class ProfileActivity :  Fragment() {
         imageView.setImageURI(data?.data)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (sharedPrefManager.isLoggedIn()) {
-            Toast.makeText(requireContext(),"saved", Toast.LENGTH_SHORT).show()
-            sharedPrefManager.let {
-                it.setLastTimeAppUsed(requireContext(), Date())
-                it.setIsLastTimeAppUseSaved(requireContext(),true)
-            }
 
-        } else {
-            sharedPrefManager.setIsLastTimeAppUseSaved(requireContext(),false)
-            Toast.makeText(requireContext(),"else ${sharedPrefManager.isLoggedIn()}", Toast.LENGTH_SHORT).show()
-
-        }
-    }
 }
 
 
